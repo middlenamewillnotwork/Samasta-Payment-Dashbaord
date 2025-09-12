@@ -4,6 +4,7 @@ class App {
         initializeDOM();
         this.setupEventListeners();
         this.setDefaultDates();
+        this.initInternetMonitoring();
         await this.loadData();
     }
 
@@ -129,6 +130,29 @@ class App {
         } else if (table.querySelector('#dataTableBody')) {
             const sorted = DataProcessor.sortTable([...AppState.filteredData], key, newOrder);
             TableRenderer.renderTable(sorted);
+        }
+    }
+
+    static initInternetMonitoring() {
+        this.updateInternetStatus();
+        
+        // Check internet status every 30 seconds
+        setInterval(() => this.updateInternetStatus(), 30000);
+        
+        // Listen for online/offline events
+        window.addEventListener('online', () => this.updateInternetStatus());
+        window.addEventListener('offline', () => this.updateInternetStatus());
+    }
+
+    static updateInternetStatus() {
+        const isOnline = navigator.onLine;
+        
+        if (isOnline) {
+            DOM.liveDataStatus.style.display = 'flex';
+            DOM.internetStatus.style.display = 'none';
+        } else {
+            DOM.liveDataStatus.style.display = 'none';
+            DOM.internetStatus.style.display = 'flex';
         }
     }
 }

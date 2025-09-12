@@ -35,9 +35,13 @@
                 <span class="nav-subtitle">CRM & Campaign Dashboard</span>
             </div>
             <div class="nav-actions">
-                <div class="status-indicator">
+                <div class="status-indicator" id="liveDataStatus">
                     <div class="status-dot"></div>
                     <span>Live Data</span>
+                </div>
+                <div class="status-indicator" id="internetStatus">
+                    <div class="status-dot offline"></div>
+                    <span>No Internet</span>
                 </div>
             </div>
         </div>
@@ -51,7 +55,7 @@
                 <div class="view-toggle-container">
                     <div class="toggle-wrapper" id="viewToggle">
                         <div class="toggle-slider" id="slider"></div>
-                        <button id="dashboardViewBtn" class="toggle-btn">
+                        <button id="dashboardViewBtn" class="toggle-btn active">
                             <i class="fas fa-chart-pie mr-2"></i>
                             Dashboard
                         </button>

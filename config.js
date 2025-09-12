@@ -45,6 +45,8 @@ const DOM = {
     endDateInput: null,
     tableSearchInput: null,
     slider: null,
+    liveDataStatus: null,
+    internetStatus: null,
     // Stats elements
     totalAmount: null,
     totalTransactions: null,
@@ -70,6 +72,8 @@ const initializeDOM = () => {
     DOM.endDateInput = document.getElementById('endDate');
     DOM.tableSearchInput = document.getElementById('tableSearch');
     DOM.slider = document.getElementById('slider');
+    DOM.liveDataStatus = document.getElementById('liveDataStatus');
+    DOM.internetStatus = document.getElementById('internetStatus');
     DOM.totalAmount = document.getElementById('totalAmount');
     DOM.totalTransactions = document.getElementById('totalTransactions');
     DOM.uniqueCRM = document.getElementById('uniqueCRM');
