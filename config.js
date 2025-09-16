@@ -67,7 +67,8 @@ const DOM = {
     crmTotalAmount: null,
     crmTotalCount: null,
     campaignTotalAmount: null,
-    campaignTotalCount: null
+    campaignTotalCount: null,
+    tableCount: null
 };
 
 // Initialize DOM elements
@@ -104,4 +105,5 @@ const initializeDOM = () => {
     DOM.crmTotalCount = document.getElementById('crmTotalCount');
     DOM.campaignTotalAmount = document.getElementById('campaignTotalAmount');
     DOM.campaignTotalCount = document.getElementById('campaignTotalCount');
+    DOM.tableCount = document.getElementById('tableCount');
 };

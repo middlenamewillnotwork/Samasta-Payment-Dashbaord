@@ -114,5 +114,6 @@ class DataProcessor {
         // Sort by Timestamp (latest first) by default
         const sortedData = this.sortTable([...AppState.filteredData], 'Timestamp', 'desc');
         TableRenderer.renderTable(sortedData);
+        TableRenderer.updateTableCount(AppState.filteredData);
     }
 }

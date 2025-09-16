@@ -140,6 +140,7 @@ class TableRenderer {
         });
         
         this.renderTable(filtered);
+        this.updateTableCount(filtered);
     }
 
     static filterTable(searchTerm) {
@@ -214,6 +215,12 @@ class TableRenderer {
             amount: paymentsByCampaign[campaign].amount,
             count: paymentsByCampaign[campaign].count
         }));
+    }
+
+    static updateTableCount(data) {
+        const count = data.length;
+        const totalAmount = data.reduce((sum, row) => sum + parseFloat(row['Amount'] || 0), 0);
+        DOM.tableCount.innerHTML = `<span style="color: #059669;">${count} payments</span> • <span style="color: #1e40af;">₹${totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>`;
     }
 
     static copyRowData(button) {

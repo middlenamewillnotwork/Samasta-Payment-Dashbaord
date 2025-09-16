@@ -402,6 +402,8 @@ body {
     padding: 1.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .table-card.full-width {
@@ -504,8 +506,26 @@ body {
 
 .table-container {
     overflow-x: auto;
+    max-height: 1000px;
+    overflow-y: auto;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+}
+
+.table-count {
+    font-size: 0.85rem;
+    margin: 0.5rem 0 0.5rem 0;
+    font-weight: 500;
+    padding: 0 1.5rem;
+}
+
+.table-count span {
+    color: #059669;
+}
+
+.table-count span::after {
+    content: attr(data-amount);
+    color: #1e40af;
 }
 
 .data-table {
