@@ -109,6 +109,7 @@ class DataProcessor {
         this.filterData();
         this.updateStats();
         ChartRenderer.renderDashboard();
+        TableRenderer.populateFilters();
         // Sort by Timestamp (latest first) by default
         const sortedData = this.sortTable([...AppState.filteredData], 'Timestamp', 'desc');
         TableRenderer.renderTable(sortedData);

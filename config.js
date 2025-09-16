@@ -44,6 +44,10 @@ const DOM = {
     startDateInput: null,
     endDateInput: null,
     tableSearchInput: null,
+    campaignFilter: null,
+    crmFilter: null,
+    paymentModeFilter: null,
+    callingDateFilter: null,
     slider: null,
     liveDataStatus: null,
     internetStatus: null,
@@ -71,6 +75,10 @@ const initializeDOM = () => {
     DOM.startDateInput = document.getElementById('startDate');
     DOM.endDateInput = document.getElementById('endDate');
     DOM.tableSearchInput = document.getElementById('tableSearch');
+    DOM.campaignFilter = document.getElementById('campaignFilter');
+    DOM.crmFilter = document.getElementById('crmFilter');
+    DOM.paymentModeFilter = document.getElementById('paymentModeFilter');
+    DOM.callingDateFilter = document.getElementById('callingDateFilter');
     DOM.slider = document.getElementById('slider');
     DOM.liveDataStatus = document.getElementById('liveDataStatus');
     DOM.internetStatus = document.getElementById('internetStatus');

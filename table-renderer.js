@@ -52,18 +52,59 @@ class TableRenderer {
         });
     }
 
-    static filterTable(searchTerm) {
-        if (!searchTerm) {
-            this.renderTable(AppState.filteredData);
-            return;
-        }
+    static populateFilters() {
+        const data = AppState.filteredData;
+        
+        // Get unique values for each filter
+        const campaigns = [...new Set(data.map(row => row['Campaign']).filter(Boolean))].sort();
+        const crmIds = [...new Set(data.map(row => row['CRM ID']).filter(Boolean))].sort();
+        const paymentModes = [...new Set(data.map(row => row['Payment Mode']).filter(Boolean))].sort();
+        const callingDates = [...new Set(data.map(row => row['Calling Date']).filter(Boolean))].sort();
+        
+        // Populate dropdowns
+        this.populateSelect(DOM.campaignFilter, campaigns, 'All Campaign');
+        this.populateSelect(DOM.crmFilter, crmIds, 'All CRM ID');
+        this.populateSelect(DOM.paymentModeFilter, paymentModes, 'All Payment Mode');
+        this.populateSelect(DOM.callingDateFilter, callingDates, 'All Calling Date');
+    }
+    
+    static populateSelect(selectElement, options, defaultText) {
+        selectElement.innerHTML = `<option value="">${defaultText}</option>`;
+        options.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option;
+            optionElement.textContent = option;
+            selectElement.appendChild(optionElement);
+        });
+    }
 
-        const filtered = AppState.filteredData.filter(row => 
-            Object.values(row).some(value => 
-                String(value).toLowerCase().includes(searchTerm.toLowerCase())
-            )
-        );
+    static applyFilters() {
+        const searchTerm = DOM.tableSearchInput.value.toLowerCase();
+        const campaignFilter = DOM.campaignFilter.value;
+        const crmFilter = DOM.crmFilter.value;
+        const paymentModeFilter = DOM.paymentModeFilter.value;
+        const callingDateFilter = DOM.callingDateFilter.value;
+        
+        let filtered = AppState.filteredData.filter(row => {
+            // Search filter
+            const matchesSearch = !searchTerm || Object.values(row).some(value => 
+                String(value).toLowerCase().includes(searchTerm)
+            );
+            
+            // Dropdown filters
+            const matchesCampaign = !campaignFilter || row['Campaign'] === campaignFilter;
+            const matchesCrm = !crmFilter || row['CRM ID'] === crmFilter;
+            const matchesPaymentMode = !paymentModeFilter || row['Payment Mode'] === paymentModeFilter;
+            const matchesCallingDate = !callingDateFilter || row['Calling Date'] === callingDateFilter;
+            
+            return matchesSearch && matchesCampaign && matchesCrm && matchesPaymentMode && matchesCallingDate;
+        });
+        
         this.renderTable(filtered);
+    }
+
+    static filterTable(searchTerm) {
+        this.applyFilters();
     }
 
     static copyRowData(button) {

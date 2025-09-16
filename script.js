@@ -18,10 +18,12 @@ class App {
         DOM.endDateInput.addEventListener('change', () => DataProcessor.filterAndRender());
         DOM.refreshBtn.addEventListener('click', () => this.loadData());
 
-        // Table search
-        DOM.tableSearchInput.addEventListener('input', (e) => {
-            TableRenderer.filterTable(e.target.value);
-        });
+        // Table search and filters
+        DOM.tableSearchInput.addEventListener('input', () => TableRenderer.applyFilters());
+        DOM.campaignFilter.addEventListener('change', () => TableRenderer.applyFilters());
+        DOM.crmFilter.addEventListener('change', () => TableRenderer.applyFilters());
+        DOM.paymentModeFilter.addEventListener('change', () => TableRenderer.applyFilters());
+        DOM.callingDateFilter.addEventListener('change', () => TableRenderer.applyFilters());
 
         // Table sorting
         document.querySelectorAll('.sortable-header').forEach(header => {
