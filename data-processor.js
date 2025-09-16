@@ -10,10 +10,15 @@ class DataProcessor {
         }
 
         AppState.filteredData = AppState.allData.filter(row => {
-            const paymentDate = new Date(row['Payment Date']);
-            const inclusiveEndDate = new Date(endDate);
-            inclusiveEndDate.setDate(inclusiveEndDate.getDate() + 1);
-            return paymentDate >= startDate && paymentDate < inclusiveEndDate;
+            const callingDateStr = row['Calling Date'];
+            if (!callingDateStr) return false;
+            
+            const callingDate = new Date(callingDateStr);
+            const startDateOnly = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+            const endDateOnly = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+            const callingDateOnly = new Date(callingDate.getFullYear(), callingDate.getMonth(), callingDate.getDate());
+            
+            return callingDateOnly >= startDateOnly && callingDateOnly <= endDateOnly;
         });
     }
 
