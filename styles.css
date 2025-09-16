@@ -402,6 +402,9 @@ body {
     padding: 1.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
+}
+
+.table-card.summary {
     max-height: 400px;
     overflow-y: auto;
 }
@@ -507,6 +510,14 @@ body {
 .table-container {
     overflow-x: auto;
     max-height: 1000px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.summary-table-container {
+    overflow-x: auto;
+    max-height: 400px;
     overflow-y: auto;
     border-radius: 8px;
     border: 1px solid var(--border-color);
