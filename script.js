@@ -24,6 +24,17 @@ class App {
         DOM.crmFilter.addEventListener('change', () => TableRenderer.applyFilters());
         DOM.paymentModeFilter.addEventListener('change', () => TableRenderer.applyFilters());
         DOM.callingDateFilter.addEventListener('change', () => TableRenderer.applyFilters());
+        
+        // Summary table filters
+        DOM.crmCampaignFilter.addEventListener('change', () => {
+            TableRenderer.renderCrmSummaryTable(AppState.crmSummaryData);
+        });
+        DOM.crmCallingDateFilter.addEventListener('change', () => {
+            TableRenderer.renderCrmSummaryTable(AppState.crmSummaryData);
+        });
+        DOM.campaignCallingDateFilter.addEventListener('change', () => {
+            TableRenderer.renderCampaignSummaryTable(AppState.campaignSummaryData);
+        });
 
         // Table sorting
         document.querySelectorAll('.sortable-header').forEach(header => {

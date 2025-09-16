@@ -48,6 +48,9 @@ const DOM = {
     crmFilter: null,
     paymentModeFilter: null,
     callingDateFilter: null,
+    crmCampaignFilter: null,
+    crmCallingDateFilter: null,
+    campaignCallingDateFilter: null,
     slider: null,
     liveDataStatus: null,
     internetStatus: null,
@@ -79,6 +82,9 @@ const initializeDOM = () => {
     DOM.crmFilter = document.getElementById('crmFilter');
     DOM.paymentModeFilter = document.getElementById('paymentModeFilter');
     DOM.callingDateFilter = document.getElementById('callingDateFilter');
+    DOM.crmCampaignFilter = document.getElementById('crmCampaignFilter');
+    DOM.crmCallingDateFilter = document.getElementById('crmCallingDateFilter');
+    DOM.campaignCallingDateFilter = document.getElementById('campaignCallingDateFilter');
     DOM.slider = document.getElementById('slider');
     DOM.liveDataStatus = document.getElementById('liveDataStatus');
     DOM.internetStatus = document.getElementById('internetStatus');

@@ -4,7 +4,16 @@ class TableRenderer {
         const tbody = DOM.crmSummaryTableBody;
         tbody.innerHTML = '';
         
-        data.sort((a, b) => b.amount - a.amount).forEach(item => {
+        // Apply filters
+        const campaignFilter = DOM.crmCampaignFilter.value;
+        const callingDateFilter = DOM.crmCallingDateFilter.value;
+        
+        let filteredData = data;
+        if (campaignFilter || callingDateFilter) {
+            filteredData = this.getFilteredCrmData(campaignFilter, callingDateFilter);
+        }
+        
+        filteredData.sort((a, b) => b.amount - a.amount).forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.crmId}</td>
@@ -19,7 +28,15 @@ class TableRenderer {
         const tbody = DOM.campaignSummaryTableBody;
         tbody.innerHTML = '';
         
-        data.sort((a, b) => b.amount - a.amount).forEach(item => {
+        // Apply filters
+        const callingDateFilter = DOM.campaignCallingDateFilter.value;
+        
+        let filteredData = data;
+        if (callingDateFilter) {
+            filteredData = this.getFilteredCampaignData(callingDateFilter);
+        }
+        
+        filteredData.sort((a, b) => b.amount - a.amount).forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.campaign}</td>
@@ -105,6 +122,76 @@ class TableRenderer {
 
     static filterTable(searchTerm) {
         this.applyFilters();
+    }
+
+    static populateSummaryFilters() {
+        const data = AppState.filteredData;
+        
+        // Get unique values
+        const campaigns = [...new Set(data.map(row => row['Campaign']).filter(Boolean))].sort();
+        const callingDates = [...new Set(data.map(row => row['Calling Date']).filter(Boolean))].sort();
+        
+        // Populate CRM filters
+        this.populateSelect(DOM.crmCampaignFilter, campaigns, 'All Campaign');
+        this.populateSelect(DOM.crmCallingDateFilter, callingDates, 'All Calling Date');
+        
+        // Populate Campaign filters
+        this.populateSelect(DOM.campaignCallingDateFilter, callingDates, 'All Calling Date');
+    }
+
+    static getFilteredCrmData(campaignFilter, callingDateFilter) {
+        let filteredData = AppState.filteredData;
+        
+        if (campaignFilter) {
+            filteredData = filteredData.filter(row => row['Campaign'] === campaignFilter);
+        }
+        if (callingDateFilter) {
+            filteredData = filteredData.filter(row => row['Calling Date'] === callingDateFilter);
+        }
+        
+        // Aggregate by CRM ID
+        const paymentsByCRM = {};
+        filteredData.forEach(row => {
+            const amount = parseFloat(row['Amount']);
+            if (isNaN(amount)) return;
+            
+            const crmId = row['CRM ID'];
+            if (!paymentsByCRM[crmId]) paymentsByCRM[crmId] = { count: 0, amount: 0 };
+            paymentsByCRM[crmId].amount += amount;
+            paymentsByCRM[crmId].count++;
+        });
+        
+        return Object.keys(paymentsByCRM).map(crmId => ({
+            crmId,
+            amount: paymentsByCRM[crmId].amount,
+            count: paymentsByCRM[crmId].count
+        }));
+    }
+
+    static getFilteredCampaignData(callingDateFilter) {
+        let filteredData = AppState.filteredData;
+        
+        if (callingDateFilter) {
+            filteredData = filteredData.filter(row => row['Calling Date'] === callingDateFilter);
+        }
+        
+        // Aggregate by Campaign
+        const paymentsByCampaign = {};
+        filteredData.forEach(row => {
+            const amount = parseFloat(row['Amount']);
+            if (isNaN(amount)) return;
+            
+            const campaign = row['Campaign'];
+            if (!paymentsByCampaign[campaign]) paymentsByCampaign[campaign] = { count: 0, amount: 0 };
+            paymentsByCampaign[campaign].amount += amount;
+            paymentsByCampaign[campaign].count++;
+        });
+        
+        return Object.keys(paymentsByCampaign).map(campaign => ({
+            campaign,
+            amount: paymentsByCampaign[campaign].amount,
+            count: paymentsByCampaign[campaign].count
+        }));
     }
 
     static copyRowData(button) {
