@@ -1,6 +1,6 @@
 // Table Renderer - Handles all table rendering and interactions
 class TableRenderer {
-    static renderCrmSummaryTable(data) {
+    static renderCrmSummaryTable(data, skipSort = false) {
         const tbody = DOM.crmSummaryTableBody;
         tbody.innerHTML = '';
         
@@ -13,7 +13,12 @@ class TableRenderer {
             filteredData = this.getFilteredCrmData(campaignFilter, callingDateFilter);
         }
         
-        filteredData.sort((a, b) => b.amount - a.amount).forEach(item => {
+        // Only apply default sorting if not already sorted
+        if (!skipSort) {
+            filteredData.sort((a, b) => b.amount - a.amount);
+        }
+        
+        filteredData.forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.crmId}</td>
@@ -22,9 +27,15 @@ class TableRenderer {
             `;
             tbody.appendChild(row);
         });
+        
+        // Update totals
+        const totalAmount = filteredData.reduce((sum, item) => sum + item.amount, 0);
+        const totalCount = filteredData.reduce((sum, item) => sum + item.count, 0);
+        DOM.crmTotalAmount.textContent = `₹${totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+        DOM.crmTotalCount.textContent = totalCount.toString();
     }
 
-    static renderCampaignSummaryTable(data) {
+    static renderCampaignSummaryTable(data, skipSort = false) {
         const tbody = DOM.campaignSummaryTableBody;
         tbody.innerHTML = '';
         
@@ -36,7 +47,12 @@ class TableRenderer {
             filteredData = this.getFilteredCampaignData(callingDateFilter);
         }
         
-        filteredData.sort((a, b) => b.amount - a.amount).forEach(item => {
+        // Only apply default sorting if not already sorted
+        if (!skipSort) {
+            filteredData.sort((a, b) => b.amount - a.amount);
+        }
+        
+        filteredData.forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.campaign}</td>
@@ -45,6 +61,12 @@ class TableRenderer {
             `;
             tbody.appendChild(row);
         });
+        
+        // Update totals
+        const totalAmount = filteredData.reduce((sum, item) => sum + item.amount, 0);
+        const totalCount = filteredData.reduce((sum, item) => sum + item.count, 0);
+        DOM.campaignTotalAmount.textContent = `₹${totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+        DOM.campaignTotalCount.textContent = totalCount.toString();
     }
 
     static renderTable(data) {

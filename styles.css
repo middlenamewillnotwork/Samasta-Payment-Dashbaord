@@ -545,6 +545,18 @@ body {
     border-bottom: none;
 }
 
+.table-total {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-top: 2px solid var(--primary-color) !important;
+}
+
+.table-total td {
+    padding: 0.875rem 1rem !important;
+    font-weight: 600 !important;
+    color: var(--dark-color) !important;
+    border-bottom: none !important;
+}
+
 /* Sortable Headers */
 .sortable-header {
     cursor: pointer;

@@ -62,7 +62,12 @@ const DOM = {
     // Table bodies
     crmSummaryTableBody: null,
     campaignSummaryTableBody: null,
-    dataTableBody: null
+    dataTableBody: null,
+    // Table totals
+    crmTotalAmount: null,
+    crmTotalCount: null,
+    campaignTotalAmount: null,
+    campaignTotalCount: null
 };
 
 // Initialize DOM elements
@@ -95,4 +100,8 @@ const initializeDOM = () => {
     DOM.crmSummaryTableBody = document.getElementById('crmSummaryTableBody');
     DOM.campaignSummaryTableBody = document.getElementById('campaignSummaryTableBody');
     DOM.dataTableBody = document.getElementById('dataTableBody');
+    DOM.crmTotalAmount = document.getElementById('crmTotalAmount');
+    DOM.crmTotalCount = document.getElementById('crmTotalCount');
+    DOM.campaignTotalAmount = document.getElementById('campaignTotalAmount');
+    DOM.campaignTotalCount = document.getElementById('campaignTotalCount');
 };

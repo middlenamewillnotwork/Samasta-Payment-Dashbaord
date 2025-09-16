@@ -136,10 +136,10 @@ class App {
         const table = header.closest('table');
         if (table.querySelector('#crmSummaryTableBody')) {
             const sorted = DataProcessor.sortTable([...AppState.crmSummaryData], key, newOrder);
-            TableRenderer.renderCrmSummaryTable(sorted);
+            TableRenderer.renderCrmSummaryTable(sorted, true);
         } else if (table.querySelector('#campaignSummaryTableBody')) {
             const sorted = DataProcessor.sortTable([...AppState.campaignSummaryData], key, newOrder);
-            TableRenderer.renderCampaignSummaryTable(sorted);
+            TableRenderer.renderCampaignSummaryTable(sorted, true);
         } else if (table.querySelector('#dataTableBody')) {
             const sorted = DataProcessor.sortTable([...AppState.filteredData], key, newOrder);
             TableRenderer.renderTable(sorted);
